@@ -1,11 +1,12 @@
 import { useState, useContext } from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
-import BlogContext from '../context/BologContext'
+import { Context } from '../context/BologContext'
 
 const AddNewBlogScreen = ({ navigation }) => {
   const [title, setTitle] = useState('')
-  const { addBlogPost } = useContext(BlogContext)
+  const [content, setContent] = useState('')
+  const { addBlogPost } = useContext(Context)
   return (
     <View style={styles.container}>
       <Text style={styles.textStyle}>Enter title:</Text>
@@ -16,10 +17,18 @@ const AddNewBlogScreen = ({ navigation }) => {
         style={styles.input}
         onChangeText={val => setTitle(val)}
       />
+      <Text style={styles.textStyle}>Enter content:</Text>
+      <TextInput
+        value={content}
+        autoCapitalize='none'
+        autoCorrect={false}
+        style={styles.input}
+        onChangeText={val => setContent(val)}
+      />
       <Button
-        title='Submit'
+        title='Save'
         onPress={() => {
-          addBlogPost({ title })
+          addBlogPost(title)
           navigation.navigate('Index')
         }}
       />

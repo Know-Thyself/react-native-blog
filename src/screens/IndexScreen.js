@@ -3,36 +3,49 @@ import {
   View,
   StyleSheet,
   FlatList,
-  Button,
   Pressable,
+  TouchableOpacity,
 } from 'react-native'
-import BlogContext from '../context/BologContext'
-import { useContext } from 'react'
-import { FontAwesome5 } from '@expo/vector-icons'
-import { MaterialIcons } from '@expo/vector-icons'
+import { Context } from '../context/BologContext'
+import { useContext, useLayoutEffect } from 'react'
+import { FontAwesome5, MaterialIcons, Entypo } from '@expo/vector-icons'
 
 const IndexScreen = ({ navigation }) => {
-  const { data, deleteBlog } = useContext(BlogContext)
+  const { state, deleteBlog } = useContext(Context)
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={() => navigation.navigate('Add')}>
+          <Entypo name='plus' style={styles.plusIcon} />
+        </TouchableOpacity>
+      ),
+    })
+  }, [navigation])
+
   return (
     <View>
-      <Button title='Add Blog' onPress={() => navigation.navigate('Add')} />
       <FlatList
-        data={data}
+        data={state}
         keyExtractor={blog => blog.title}
         renderItem={({ item }) => (
-          <View style={styles.container}>
-            <Text style={styles.title}>{item.title}</Text>
-            <View style={styles.icons}>
-              <Pressable
-                onPress={() => navigation.navigate('Edit', { id: item.id })}
-              >
-                <MaterialIcons name='edit' size={24} color='black' />
-              </Pressable>
-              <Pressable onPress={() => deleteBlog(item.id)}>
-                <FontAwesome5 name='trash' size={24} color='#444' />
-              </Pressable>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Show', { id: item.id })}
+          >
+            <View style={styles.container}>
+              <Text style={styles.title}>{item.title}</Text>
+              <View style={styles.icons}>
+                <Pressable
+                  onPress={() => navigation.navigate('Edit', { id: item.id })}
+                >
+                  <MaterialIcons name='edit' size={24} color='black' />
+                </Pressable>
+                <Pressable onPress={() => deleteBlog(item.id)}>
+                  <FontAwesome5 name='trash' size={24} color='#444' />
+                </Pressable>
+              </View>
             </View>
-          </View>
+          </TouchableOpacity>
         )}
       />
     </View>
@@ -44,8 +57,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 10,
-    marginVertical: 4,
-    backgroundColor: '#999',
+    borderTopColor: '#999',
+    borderTopWidth: 1,
   },
   title: {
     fontSize: 18,
@@ -54,6 +67,11 @@ const styles = StyleSheet.create({
   icons: {
     flexDirection: 'row',
     gap: 20,
+  },
+  plusIcon: {
+    // marginRight: 10,
+    fontSize: 30,
+    color: '#444',
   },
 })
 
