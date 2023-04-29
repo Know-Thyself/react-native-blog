@@ -1,13 +1,14 @@
 import { useState, useContext } from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
-import BlogContext from '../context/BologContext'
+import { Context } from '../context/BologContext'
 
 const EditBlogScreen = ({ navigation, route }) => {
-  const { data, editBlog } = useContext(BlogContext)
+  const { state, editBlog } = useContext(Context)
   const id = route.params.id
-  const blogToEdit = data.filter(val => val.id === id)[0]
+  const blogToEdit = state.filter(val => val.id === id)[0]
   const [title, setTitle] = useState(blogToEdit.title)
+  const [content, setContent] = useState(blogToEdit.content)
 
   return (
     <View style={styles.container}>
@@ -19,10 +20,18 @@ const EditBlogScreen = ({ navigation, route }) => {
         style={styles.input}
         onChangeText={val => setTitle(val)}
       />
+      <Text style={styles.textStyle}>Edit content:</Text>
+      <TextInput
+        value={content}
+        autoCapitalize='none'
+        autoCorrect={false}
+        style={styles.input}
+        onChangeText={val => setContent(val)}
+      />
       <Button
-        title='Submit'
+        title='Save'
         onPress={() => {
-          editBlog(title, id)
+          editBlog(id, title, content)
           navigation.navigate('Index')
         }}
       />
@@ -40,10 +49,12 @@ const styles = StyleSheet.create({
   },
   input: {
     margin: 20,
+    padding: 10,
     width: 240,
     borderColor: '#333',
     borderWidth: 1,
-    fontSize: 16,
+    fontSize: 18,
+    borderRadius: 4,
   },
 })
 

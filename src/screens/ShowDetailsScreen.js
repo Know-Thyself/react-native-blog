@@ -10,7 +10,7 @@ const ShowDetailsScreen = ({ navigation, route }) => {
     <View>
       <Text style={styles.title}>{blogToShow.title}</Text>
       <Text style={styles.textContent}>
-        {blogToShow.title} is all about ...
+        {blogToShow.content}
       </Text>
     </View>
   )

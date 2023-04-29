@@ -27,7 +27,7 @@ const IndexScreen = ({ navigation }) => {
     <View>
       <FlatList
         data={state}
-        keyExtractor={blog => blog.title}
+        keyExtractor={blog => blog.id}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => navigation.navigate('Show', { id: item.id })}
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   title: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
   },
   icons: {
@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   plusIcon: {
-    // marginRight: 10,
     fontSize: 30,
     color: '#444',
   },

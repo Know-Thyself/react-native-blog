@@ -7,6 +7,7 @@ const AddNewBlogScreen = ({ navigation }) => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const { addBlogPost } = useContext(Context)
+
   return (
     <View style={styles.container}>
       <Text style={styles.textStyle}>Enter title:</Text>
@@ -28,7 +29,9 @@ const AddNewBlogScreen = ({ navigation }) => {
       <Button
         title='Save'
         onPress={() => {
-          addBlogPost(title)
+          if (title) {
+            addBlogPost(title, content)
+          }
           navigation.navigate('Index')
         }}
       />
@@ -46,10 +49,12 @@ const styles = StyleSheet.create({
   },
   input: {
     margin: 20,
+    padding: 10,
     width: 240,
     borderColor: '#333',
     borderWidth: 1,
-    fontSize: 16,
+    fontSize: 18,
+    borderRadius: 4,
   },
 })
 
