@@ -13,7 +13,16 @@ export default function App() {
   return (
     <Provider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: '#BEBEBE',
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        >
           <Stack.Screen
             name='Index'
             component={IndexScreen}
@@ -32,16 +41,7 @@ export default function App() {
           <Stack.Screen
             name='Show'
             component={ShowDetailsScreen}
-            options={{
-              title: 'Blog Details',
-              headerStyle: {
-                backgroundColor: '#f4511e',
-              },
-              headerTintColor: '#fff',
-              headerTitleStyle: {
-                fontWeight: 'bold',
-              },
-            }}
+            options={{ title: 'Blog Details' }}
           />
         </Stack.Navigator>
       </NavigationContainer>

@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import { Context } from '../context/BologContext'
 import { useContext, useLayoutEffect } from 'react'
-import { FontAwesome5, MaterialIcons, Entypo } from '@expo/vector-icons'
+import { FontAwesome5, Entypo } from '@expo/vector-icons'
 
 const IndexScreen = ({ navigation }) => {
   const { state, deleteBlog } = useContext(Context)
@@ -34,16 +34,9 @@ const IndexScreen = ({ navigation }) => {
           >
             <View style={styles.container}>
               <Text style={styles.title}>{item.title}</Text>
-              <View style={styles.icons}>
-                <Pressable
-                  onPress={() => navigation.navigate('Edit', { id: item.id })}
-                >
-                  <MaterialIcons name='edit' size={24} color='black' />
-                </Pressable>
-                <Pressable onPress={() => deleteBlog(item.id)}>
-                  <FontAwesome5 name='trash' size={24} color='#444' />
-                </Pressable>
-              </View>
+              <Pressable onPress={() => deleteBlog(item.id)}>
+                <FontAwesome5 name='trash' size={24} color='#444' />
+              </Pressable>
             </View>
           </TouchableOpacity>
         )}
@@ -63,10 +56,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: '600',
-  },
-  icons: {
-    flexDirection: 'row',
-    gap: 20,
   },
   plusIcon: {
     fontSize: 30,
