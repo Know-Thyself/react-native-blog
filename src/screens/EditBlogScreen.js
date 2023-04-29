@@ -12,7 +12,7 @@ const EditBlogScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textStyle}>Edit title:</Text>
+      <Text style={styles.label}>Edit title:</Text>
       <TextInput
         value={title}
         autoCapitalize='none'
@@ -20,7 +20,7 @@ const EditBlogScreen = ({ navigation, route }) => {
         style={styles.input}
         onChangeText={val => setTitle(val)}
       />
-      <Text style={styles.textStyle}>Edit content:</Text>
+      <Text style={styles.label}>Edit content:</Text>
       <TextInput
         value={content}
         autoCapitalize='none'
@@ -30,10 +30,9 @@ const EditBlogScreen = ({ navigation, route }) => {
       />
       <Button
         title='Save'
-        onPress={() => {
-          editBlog(id, title, content)
-          navigation.navigate('Index')
-        }}
+        onPress={() =>
+          editBlog(id, title, content, () => navigation.navigate('Index'))
+        }
       />
     </View>
   )
@@ -43,12 +42,14 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 20,
   },
-  textStyle: {
-    marginLeft: 20,
+  label: {
+    marginLeft: 10,
     fontSize: 20,
   },
   input: {
-    margin: 20,
+    marginHorizontal: 10,
+    marginVertical: 5,
+    marginBottom: 15,
     padding: 10,
     width: 240,
     borderColor: '#333',

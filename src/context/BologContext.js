@@ -30,11 +30,12 @@ const reducer = (state, action) => {
   }
 }
 const addBlogPost = dispatch => {
-  return (newTitle, newContent) => {
+  return (newTitle, newContent, callback) => {
     dispatch({
       type: 'add_blogpost',
       payload: { title: newTitle, content: newContent },
     })
+    callback()
   }
 }
 
@@ -45,11 +46,12 @@ const deleteBlog = dispatch => {
 }
 
 const editBlog = dispatch => {
-  return (id, updatedTitle, updatedContent) => {
+  return (id, updatedTitle, updatedContent, callback) => {
     dispatch({
       type: 'edit_blogpost',
       payload: { id: id, title: updatedTitle, content: updatedContent },
     })
+    callback()
   }
 }
 

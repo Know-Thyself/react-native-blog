@@ -10,7 +10,7 @@ const AddNewBlogScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textStyle}>Enter title:</Text>
+      <Text style={styles.label}>Enter title:</Text>
       <TextInput
         value={title}
         autoCapitalize='none'
@@ -18,7 +18,7 @@ const AddNewBlogScreen = ({ navigation }) => {
         style={styles.input}
         onChangeText={val => setTitle(val)}
       />
-      <Text style={styles.textStyle}>Enter content:</Text>
+      <Text style={styles.label}>Enter content:</Text>
       <TextInput
         value={content}
         autoCapitalize='none'
@@ -27,12 +27,11 @@ const AddNewBlogScreen = ({ navigation }) => {
         onChangeText={val => setContent(val)}
       />
       <Button
-        title='Save'
+        title='Add Blog'
         onPress={() => {
           if (title) {
-            addBlogPost(title, content)
+            addBlogPost(title, content, () => navigation.navigate('Index'))
           }
-          navigation.navigate('Index')
         }}
       />
     </View>
@@ -43,12 +42,14 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 20,
   },
-  textStyle: {
-    marginLeft: 20,
+  label: {
+    marginLeft: 10,
     fontSize: 20,
   },
   input: {
-    margin: 20,
+    marginHorizontal: 10,
+    marginVertical: 5,
+    marginBottom: 15,
     padding: 10,
     width: 240,
     borderColor: '#333',
