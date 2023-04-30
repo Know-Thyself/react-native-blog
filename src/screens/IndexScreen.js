@@ -7,11 +7,22 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { Context } from '../context/BologContext'
-import { useContext, useLayoutEffect } from 'react'
+import { useContext, useEffect, useLayoutEffect } from 'react'
 import { FontAwesome5, Entypo } from '@expo/vector-icons'
 
 const IndexScreen = ({ navigation }) => {
-  const { state, deleteBlog } = useContext(Context)
+  const { state, getBlogPosts, deleteBlog } = useContext(Context)
+
+  useEffect(() => {
+    getBlogPosts()
+    const listener = navigation.addListener('didFocus', () => {
+      getBlogPosts()
+    })
+    //cleaning up when index screen is removed
+    return () => {
+      listener.remove()
+    }
+  }, [])
 
   useLayoutEffect(() => {
     navigation.setOptions({

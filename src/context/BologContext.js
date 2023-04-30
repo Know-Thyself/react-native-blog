@@ -1,7 +1,10 @@
 import createDataContext from './createDataContext'
+import jsonServer from '../api/jsonServer'
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'get_blogposts':
+      return action.payload
     case 'add_blogpost':
       const blogIds = state.map(post => post.id)
       const newId = Math.max(...blogIds) + 1
@@ -29,8 +32,20 @@ const reducer = (state, action) => {
       break
   }
 }
+
+const getBlogPosts = dispatch => {
+  return async () => {
+    const response = await jsonServer.get('blogposts')
+    dispatch({ type: 'get_blogposts', payload: response.data })
+  }
+}
+
 const addBlogPost = dispatch => {
-  return (newTitle, newContent, callback) => {
+  return async (newTitle, newContent, callback) => {
+    await jsonServer.post('/blogposts', {
+      title: newTitle,
+      content: newContent,
+    })
     dispatch({
       type: 'add_blogpost',
       payload: { title: newTitle, content: newContent },
@@ -40,13 +55,18 @@ const addBlogPost = dispatch => {
 }
 
 const deleteBlog = dispatch => {
-  return id => {
+  return async id => {
+    await jsonServer.delete(`/blogposts/${id}`)
     dispatch({ type: 'delete_blogpost', payload: id })
   }
 }
 
 const editBlog = dispatch => {
-  return (id, updatedTitle, updatedContent, callback) => {
+  return async (id, updatedTitle, updatedContent, callback) => {
+    await jsonServer.patch(`/blogposts/${id}`, {
+      title: updatedTitle,
+      content: updatedContent,
+    })
     dispatch({
       type: 'edit_blogpost',
       payload: { id: id, title: updatedTitle, content: updatedContent },
@@ -57,10 +77,6 @@ const editBlog = dispatch => {
 
 export const { Context, Provider } = createDataContext(
   reducer,
-  { addBlogPost, deleteBlog, editBlog },
-  [
-    { id: 1, title: 'First Blog', content: 'This is the First Blog' },
-    { id: 2, title: 'Second Blog', content: 'This is the Second Blog' },
-    { id: 3, title: 'Third Blog', content: 'This is the Third Blog' },
-  ]
+  { getBlogPosts, addBlogPost, deleteBlog, editBlog },
+  []
 )
