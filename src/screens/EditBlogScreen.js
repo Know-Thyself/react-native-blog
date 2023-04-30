@@ -30,9 +30,7 @@ const EditBlogScreen = ({ navigation, route }) => {
       />
       <Button
         title='Save'
-        onPress={() =>
-          editBlog(id, title, content, () => navigation.navigate('Index'))
-        }
+        onPress={() => editBlog(id, title, content, () => navigation.goBack())}
       />
     </View>
   )
