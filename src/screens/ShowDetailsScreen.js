@@ -6,10 +6,10 @@ import { MaterialIcons } from '@expo/vector-icons'
 const ShowDetailsScreen = ({ navigation, route }) => {
   const { state } = useContext(Context)
   const blogToShow = state.find(blog => blog.id === route.params.id)
-  navigation.setOptions({ title: blogToShow.title })
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      title: blogToShow.title,
       headerRight: () => (
         <TouchableOpacity
           onPress={() => navigation.navigate('Edit', { id: blogToShow.id })}
